@@ -6,7 +6,8 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware to log requests with timestamp and IP address
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} - IP: ${req.ip}`);
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} - IP: ${ip}`);
   next();
 });
 
